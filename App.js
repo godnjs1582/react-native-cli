@@ -1,25 +1,52 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TextInput, Button, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback, Pressable} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Button, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback, Pressable, Alert} from 'react-native';
 // https://stackoverflow.com/questions/34977588/input-text-doesnt-show-keyboard-on-ios-simulator (키보드 안 나타나는 현상 )
 //numeric, phone-pad,default,...
 const App = () => {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const onPressHandler = () => {
-    setSubmitted(!submitted);
+    if (name.length > 3) {
+      setSubmitted(!submitted);
+    } else {
+      Alert.alert(
+        'Warning',
+        'The name must be longer than 3 characters',
+        [
+          {
+            text: 'Do not Show Again',
+            onPress: () => console.warn('Do Not Show Again Pressed!'),
+            style: 'destructive',
+          },
+          {
+            text: 'Cancle',
+            onPress: () => console.warn('Cancle Pressed!'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => console.warn('OK Pressed!'),
+            style: 'default',
+          },
+        ],
+        {
+          cancelable: true,
+          onDismiss: () => console.warn('Alert dismissed!') 
+        });
+    }
   };
   return (
     <View style={styles.body}>
       <Text style={styles.text}>Please write your name</Text>
       <TextInput
-        keyboardType="numeric"
+        keyboardType="default"
         multiLine
         style={styles.input}
         placeholder="haewon"
         onChangeText={value => setName(value)} 
-        maxLength={2}
+        // maxLength={2}
         editable={true}
-        secureTextEntry
+        // secureTextEntry
       />
       {/* <Button title={submitted ? 'Clear' : 'Submit'} onPress={onPressHandler} disabled={false} /> */}
       {/* toughableOpacity , touchableghighlight, touchablewidthoutfeedback, Pressable, */}
