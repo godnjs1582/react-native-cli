@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-const Header = (props) => {
+import {View, StyleSheet, Text} from 'react-native';
+const Header = props => {
     return (
         <View
             style={styles.view}>
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     text: {
-        fontWeight:'bold',
+        fontWeight: 'bold',
         fontSize: 25,
         color: '#ffffff'
     }
