@@ -1,23 +1,25 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, TextInput,Modal, Pressable, Image, ImageBackground} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Modal, Pressable, Image, ImageBackground } from 'react-native';
+import MashButton from './CustomButton';
+import Header from './Header';
 // https://stackoverflow.com/questions/34977588/input-text-doesnt-show-keyboard-on-ios-simulator (키보드 안 나타나는 현상 )
 //numeric, phone-pad,default,...
 const App = () => {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [showWarning, setShowWarining]=useState(false)
+  const [showWarning, setShowWarining] = useState(false);
   //toastAndroid의 경우 안드로이드에서만 지원되는 기능, iso 에서 toast 사용시 별도의 라이브러리 설치 혹은 직접 구현(actionsheet를 이용해 toast구현 가능)
   const onPressHandler = () => {
     if (name.length > 3) {
       setSubmitted(!submitted);
     } else {
-     setShowWarining(true);
+      setShowWarining(true);
     }
   };
   return (
     <ImageBackground style={styles.body}
-    
-    source={{uri:'https://cdn.pixabay.com/photo/2013/07/12/13/48/bricks-147309_1280.png'}}>
+      source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/13/48/bricks-147309_1280.png' }}>
+        <Header/>
       <Modal
         transparent
         visible={showWarning}
@@ -38,7 +40,7 @@ const App = () => {
             <Pressable
               onPress={() => setShowWarining(false)}
               style={styles.warning_button}
-              android_ripple={{color:'#fff'}}
+              android_ripple={{ color: '#fff' }}
             >
               <Text style={styles.text}>OK</Text>
             </Pressable>
@@ -51,29 +53,23 @@ const App = () => {
         multiLine
         style={styles.input}
         placeholder="haewon"
-        onChangeText={value => setName(value)} 
+        onChangeText={value => setName(value)}
         // maxLength={2}
         editable={true}
-        // secureTextEntry
+      // secureTextEntry
       />
-      {/* <Button title={submitted ? 'Clear' : 'Submit'} onPress={onPressHandler} disabled={false} /> */}
-      {/* toughableOpacity , touchableghighlight, touchablewidthoutfeedback, Pressable, */}
-      {/* <TouchableWithoutFeedback
-        style={styles.button}
-        onPress={onPressHandler}
-      > */}
-      <Pressable
-        onPress={onPressHandler}
-        hitSlop={{top: 10, bottom: 10, right: 10, left: 10}}
-        disabled={false}
-        android_ripple={{color: '#00f'}}
-        // delayLongPress={1000}
-        style={({pressed}) => [
-          {backgroundColor: pressed ? '#dddddd' : '#00ff00'},
-        ]}>
-        <Text style={styles.text}>{submitted ? 'Clear' : 'Submit'}</Text>
-      </Pressable>      
-      {/* </TouchableWithoutFeedback> */}
+      <MashButton
+        onPressFunction={onPressHandler}
+        title={submitted ? 'Clear' : 'Submit'}
+        color={'#00ff00'}
+      />
+      <MashButton
+        onPressFunction={() => { }}
+        title={'Text'}
+        color={'#ff00ff'}
+        style={{margin:10}}
+      />
+      
       {submitted ?
         <View style={styles.body}>
           <Text style={styles.text}>
@@ -82,15 +78,15 @@ const App = () => {
           <Image
             resizeMode='stretch'
             style={styles.image}
-            source={require('./assets/done.png')}
+            source={require('../assets/done.png')}
             blurRadius={3}
-            />
+          />
         </View>
         :
         <Image
           resizeMode='stretch'
           style={styles.image}
-          source={require('./assets/error.png')} />
+          source={require('../assets/error.png')} />
       }
     </ImageBackground>
   );
@@ -112,7 +108,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 20,
     margin: 10,
-    textAlign:'center',
+    textAlign: 'center',
   },
   input: {
     borderWidth: 1,
