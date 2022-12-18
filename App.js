@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TextInput,Modal, Pressable} from 'react-native';
+import {StyleSheet, Text, View, TextInput,Modal, Pressable, Image, ImageBackground} from 'react-native';
 // https://stackoverflow.com/questions/34977588/input-text-doesnt-show-keyboard-on-ios-simulator (키보드 안 나타나는 현상 )
 //numeric, phone-pad,default,...
 const App = () => {
@@ -15,7 +15,9 @@ const App = () => {
     }
   };
   return (
-    <View style={styles.body}>
+    <ImageBackground style={styles.body}
+    
+    source={{uri:'https://cdn.pixabay.com/photo/2013/07/12/13/48/bricks-147309_1280.png'}}>
       <Modal
         transparent
         visible={showWarning}
@@ -73,16 +75,31 @@ const App = () => {
       </Pressable>      
       {/* </TouchableWithoutFeedback> */}
       {submitted ?
-        <Text style={styles.text}>You are registered as {name}</Text>
-        : null}
-    </View>
+        <View style={styles.body}>
+          <Text style={styles.text}>
+            You are registered as {name}
+          </Text>
+          <Image
+            resizeMode='stretch'
+            style={styles.image}
+            source={require('./assets/done.png')}
+            blurRadius={3}
+            />
+        </View>
+        :
+        <Image
+          resizeMode='stretch'
+          style={styles.image}
+          source={require('./assets/error.png')} />
+      }
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    // backgroundColor: '#ffffff',
     alignItems: 'center',
   },
   item: {
@@ -142,6 +159,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#00ffff',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10,
   }
 
 });
