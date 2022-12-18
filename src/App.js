@@ -1,78 +1,88 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable} from 'react-native';
+import {StyleSheet, View, Text, Pressable} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // import {createStackNavigator} from '@react-navigation/stack';
 // import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import ScreenA from './ScreenA';
 import ScreenB from './ScreenB';
-
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
-
-
 // const Stack = createStackNavigator();
 // const Tab=createBottomTabNavigator();
-const Tab=createMaterialTopTabNavigator();
+// const Tab=createMaterialTopTabNavigator();
+const Drawer = createDrawerNavigator();
 
 const App = () => {
 
   // const icon=<FontAwesome5 name={'comments'} solid/>;
 
   return(
+  
+    
     <NavigationContainer>
-      <Tab.Navigator
-      //  initialRouteName="Home"
-       activeColor="#f0edf6"
-       inactiveColor="#3e2465"
-       barStyle={{ backgroundColor: '#694fad' }}
-        screenOptions={({route})=>({
-          tabBarIcon:({focused,size,color})=>{
-            let iconName;
-            if(route.name==='Screen_A'){
-              iconName='autoprefixer';
-              size=focused?25:20;
-              color=focused?'#f0f':'#555';
-              
-            }else if(route.name==='Screen_B'){
-              iconName='btc';
-              size=focused?25:20;
-              color=focused?'#f0f':'#555';
-            }
-            return(
-             <FontAwesome5
-             name={iconName}/>
-            )
+      <Drawer.Navigator
+        screenOptions={{
+          drawerStyle:{
+            backgroundColor:"#e6e6e6",
+            width:250,
+          },
+          drawerPosition:"right",
+          drawerType:"front",//front/slide
+          overlayColor:'#0000090',
+          headerShown:true,
+          swipeEnabled:true,
+          gestureEnabled:true,
+          headerTitle:'center',
+          headerStyle:{
+            backgroundColor:'#0080ff',
+          },
+          headerTintColor:'#ffffff',
+          headerTitleStyle:{
+            fontSize:24,
+            fontWeight:'bold'
           }
-        })}
+        }}
 
-        // screenOptions={{
-        //   tabBarActiveTintColor:'#f0f',
-        //   tabBarInactiveTintColor:'#555',
-        //   tabBarActiveBackgroundColor:'#fff',
-        //   tabBarInactiveBackgroundColor:'#999',
-        //   showLabel:false,
-        //   tabBarStyle:{fontSize:14}
-        // }}
-        // activeColor="#f0edf6"
-        // inactiveColor="#3e2465"
+        initialRouteName="Screen_B"
+        
+       
+        hideStatusBar={false}
+        
+       
       >
-        <Tab.Screen
+        <Drawer.Screen
           name="Screen_A"
           component={ScreenA}
-          options={{tabBarBadge:3}}
+          options={{
+            title:'screen_A_title',
+            drawerIcon:({focused})=>(
+              <FontAwesome5 
+                name="btc"
+                size={focused?25:20}
+                color={focused?'#0080ff':'#999999'}
+                
+                />
+            )
+          }}
         />
-        <Tab.Screen
+        <Drawer.Screen
           name="Screen_B"
           component={ScreenB}
+          options={{
+            title:'screen_B_title',
+            drawerIcon:({focused})=>(
+              <FontAwesome5 
+                name="btc"
+                size={focused?25:20}
+                color={focused?'#0080ff':'#999999'}
+                
+                />
+            )
+          }}
         />
-      </Tab.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }

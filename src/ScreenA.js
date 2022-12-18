@@ -3,7 +3,8 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 
 const ScreenA = ({ navigation }) => {
     const onPressHandler = () => {
-        navigation.navigate('Screen_B')
+        navigation.toggleDrawer();
+        // navigation.navigate('Screen_B')
         // navigation.replace('Screen_B');
     }
     return (
@@ -16,7 +17,7 @@ const ScreenA = ({ navigation }) => {
                 style={({ pressed }) => ({ backgroundColor: pressed ? "#ddd" : "#0f0" })}
             >
                 <Text style={styles.text}>
-                    Go to ScreenB
+                    Toggle Drawer
                 </Text>
             </Pressable>
         </View>
