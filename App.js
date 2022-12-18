@@ -1,44 +1,48 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TextInput, Button, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback, Pressable, Alert, ToastAndroid} from 'react-native';
+import {StyleSheet, Text, View, TextInput,Modal, Pressable} from 'react-native';
 // https://stackoverflow.com/questions/34977588/input-text-doesnt-show-keyboard-on-ios-simulator (키보드 안 나타나는 현상 )
 //numeric, phone-pad,default,...
 const App = () => {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  //toastAndroid의 경우 안드로이드에서만 지원되는 기능, iso 에서 toast 사용시 별도의 라이브러리 설치 혹은 직접 구현
+  const [showWarning, setShowWarining]=useState(false)
+  //toastAndroid의 경우 안드로이드에서만 지원되는 기능, iso 에서 toast 사용시 별도의 라이브러리 설치 혹은 직접 구현(actionsheet를 이용해 toast구현 가능)
   const onPressHandler = () => {
     if (name.length > 3) {
       setSubmitted(!submitted);
     } else {
-      // Alert.alert(
-      //   'Warning',
-      //   'The name must be longer than 3 characters',
-      //   [
-      //     {
-      //       text: 'Do not Show Again',
-      //       onPress: () => console.warn('Do Not Show Again Pressed!'),
-      //       style: 'destructive',
-      //     },
-      //     {
-      //       text: 'Cancle',
-      //       onPress: () => console.warn('Cancle Pressed!'),
-      //       style: 'cancel',
-      //     },
-      //     {
-      //       text: 'OK',
-      //       onPress: () => console.warn('OK Pressed!'),
-      //       style: 'default',
-      //     },
-      //   ],
-      //   {
-      //     cancelable: true,
-      //     onDismiss: () => console.warn('Alert dismissed!') 
-      //   });
-      ToastAndroid.show('sdfsdfsdf')
+     setShowWarining(true);
     }
   };
   return (
     <View style={styles.body}>
+      <Modal
+        transparent
+        visible={showWarning}
+        onRequestClose={() =>
+          setShowWarining(false)
+        }
+        animationType="slide"
+        hardwareAccelerated
+      >
+        <View style={styles.centered_view}>
+          <View style={styles.warning_modal}>
+            <View style={styles.warning_title}>
+              <Text style={styles.text}>WARNING!</Text>
+            </View>
+            <View style={styles.warnng_body}>
+              <Text style={styles.text}>The name must be linger than 3 characters</Text>
+            </View>
+            <Pressable
+              onPress={() => setShowWarining(false)}
+              style={styles.warning_button}
+              android_ripple={{color:'#fff'}}
+            >
+              <Text style={styles.text}>OK</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <Text style={styles.text}>Please write your name</Text>
       <TextInput
         keyboardType="default"
@@ -91,6 +95,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 20,
     margin: 10,
+    textAlign:'center',
   },
   input: {
     borderWidth: 1,
@@ -106,6 +111,39 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
   },
+  warning_modal: {
+    width: 300,
+    height: 300,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderRadius: 20,
+  },
+  centered_view: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00000099',
+  },
+  warning_title: {
+    height: 50,
+    justifyContent: 'center',
+    alignContent: 'center',
+    backgroundColor: '#ff0',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+  warning_body: {
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  warning_button: {
+    backgroundColor: '#00ffff',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  }
+
 });
 
 export default App;
