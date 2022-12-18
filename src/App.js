@@ -44,13 +44,6 @@ const App = () => {
             fontWeight:'bold'
           }
         }}
-
-        initialRouteName="Screen_B"
-        
-       
-        hideStatusBar={false}
-        
-       
       >
         <Drawer.Screen
           name="Screen_A"
@@ -81,6 +74,7 @@ const App = () => {
                 />
             )
           }}
+          initialParams={{ItemName:'Item from Drawer', ItemId:12}}
         />
       </Drawer.Navigator>
     </NavigationContainer>

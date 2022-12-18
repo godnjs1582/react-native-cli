@@ -5,10 +5,12 @@ import {
   Text,
   Pressable} from 'react-native';
 
-  const ScreenB=({navigation})=>{
+  const ScreenB=({route,navigation})=>{
+      const { ItemName, ItemId } = route.params;
     const onPressHandler = () => {
-      navigation.navigate('Screen_A')
-      // navigation.goBack();
+      navigation.navigate('Screen_A',{Message:"message to screenA"})
+    //   navigation.goBack();
+    //   navigation.setParams({ItemId:14})
     }
     return(
       <View style={styles.body}>
@@ -22,9 +24,8 @@ import {
             header: () => null
           }}
         >
-          <Text style={styles.text}>
-            Go to ScreenA
-          </Text>
+          <Text style={styles.text}>{JSON.stringify(ItemName)}</Text>
+          <Text style={styles.text}>ID:{ItemId}</Text>
         </Pressable>
       </View>
     )

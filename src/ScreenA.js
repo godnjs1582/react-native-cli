@@ -1,11 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 
-const ScreenA = ({ navigation }) => {
+const ScreenA = ({navigation, route}) => {
     const onPressHandler = () => {
-        navigation.toggleDrawer();
-        // navigation.navigate('Screen_B')
-        // navigation.replace('Screen_B');
+        navigation.navigate('Screen_B');
     }
     return (
         <View style={styles.body}>
@@ -17,7 +15,7 @@ const ScreenA = ({ navigation }) => {
                 style={({ pressed }) => ({ backgroundColor: pressed ? "#ddd" : "#0f0" })}
             >
                 <Text style={styles.text}>
-                    Toggle Drawer
+                    {route.params?.Message}
                 </Text>
             </Pressable>
         </View>
